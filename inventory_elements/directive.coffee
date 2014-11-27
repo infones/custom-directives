@@ -4,24 +4,30 @@ registerDirective 'inventoryElements',
     restrict: 'E'
     template: '<div ng-if="elements.length">' +
         '<h4>{{inventory.name}}</h4>' +
-        '<small class="text-muted">Sort by: </small>' +
-        '<div class="btn-group" ng-model="filter">' +
-            '<button class="btn btn-default btn-sm navbar-btn" value="et"><span class="fa fa-send-o" ng-class="{active: filter === \'et\'"> Element type</span></button>' +
-            '<button class="btn btn-default btn-sm navbar-btn" value="it"><span class="fa fa-cubes" ng-class="{active: filter === \'it\'"> Inventory type</span></button>' +
-            '<button class="btn btn-default btn-sm navbar-btn" value="is"><span class="fa fa-list" ng-class="{active: filter === \'is\'"> Inventory state</span></button>' +
+
+        '<span>Sort by: </span>' +
+        '<div class="btn-group">' +
+            '<button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'type\')" ng-class="{\'active\': sorting === \'type\'}"><span class="fa fa-send-o" > Element type</span></button>' +
+            '<button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'IA\')" ng-class="{\'active\': sorting === \'IA\'}"><span class="fa fa-cubes"> Inventory type</span></button>' +
+            '<button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'status\')" ng-class="{\'active\': sorting === \'status\'}"><span class="fa fa-list"> Inventory state</span></button>' +
         '</div>' +
+
         '<div class="list-group">' +
-            '<a href="{{URLconfig.element}}/{{element.id}}" ng-repeat="element in elements | orderBy:sorting:true" class="list-group-item">' +
+            '<a href="{{URLconfig.element}}/{{element.id}}" ng-repeat="element in elements | orderBy:sorting:sortingOrder" class="list-group-item">' +
             '<span ng-if="element.status" class="badge" ng-class="{\'badge-info\': !element.status, \'badge-danger\': (element.status === \'notfound\'), \'badge-warning\': (element.status === \'missplaced\'), \'badge-success\': (element.status === \'placed\')}">{{element.status}}</span>' +
                 '{{element.name}}' +
             '</a>' +
         '</div>' +
-        '</div>'
+    '</div>'
 
 
     controller: ($scope, $rootScope, $http, $q) ->
 
         urlBase = 'https://edocu.service.dev.edocu.local'
+
+        # default sorting
+        $scope.sorting = 'status'
+        $scope.sortingOrder = true
 
         mockElements = (id) ->
             one = [
@@ -161,8 +167,11 @@ registerDirective 'inventoryElements',
 
             return
 
-        # default sorting
-        $scope.filter = 'is'
-        $scope.sorting = 'status'
+        $scope.sort = (sortBy) ->
+            if $scope.sorting is sortBy
+                $scope.sortingOrder = !$scope.sortingOrder
+            else
+                $scope.sorting = sortBy
+
         return
 

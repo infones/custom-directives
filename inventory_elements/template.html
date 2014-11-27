@@ -2,10 +2,10 @@
     <h4>{{inventory.name}}</h4>
 
     <span>Sort by: </span>
-    <div class="btn-group" ng-model="filter">
-        <button class="btn btn-default btn-sm" value="et"><span class="fa fa-send-o" ng-class="{active: filter === \'et\'">Element type</span></button>
-        <button class="btn btn-default btn-sm" value="it"><span class="fa fa-cubes" ng-class="{active: filter === \'it\'">Inventory type</span></button>
-        <button class="btn btn-default btn-sm" value="is"><span class="fa fa-list" ng-class="{active: filter === \'is\'">Inventory state</span></button>
+    <div class="btn-group">
+        <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'type\')" ng-class="{\'active\': sorting === \'type\'}"><span class="fa fa-send-o" > Element type</span></button>
+        <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'AI\')"  ng-class="{\'active\': sorting === \'AI\'}"><span class="fa fa-cubes"> Inventory type</span></button>
+        <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'status\')" ng-class="{\'active\': sorting === \'status\'}"><span class="fa fa-list"> Inventory state</span></button>
     </div>
 
     <div class="list-group">
