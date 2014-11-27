@@ -1,0 +1,17 @@
+<div ng-if="elements.length">
+    <h4>{{inventory.name}}</h4>
+
+    <span>Sort by: </span>
+    <div class="btn-group" ng-model="filter">
+        <button class="btn btn-default btn-sm" value="et"><span class="fa fa-send-o" ng-class="{active: filter === \'et\'">Element type</span></button>
+        <button class="btn btn-default btn-sm" value="it"><span class="fa fa-cubes" ng-class="{active: filter === \'it\'">Inventory type</span></button>
+        <button class="btn btn-default btn-sm" value="is"><span class="fa fa-list" ng-class="{active: filter === \'is\'">Inventory state</span></button>
+    </div>
+
+    <div class="list-group">
+        <a href="{{URLconfig.element}}/{{element.id}}" ng-repeat="element in elements | orderBy:sorting:true" class="list-group-item">
+        <span ng-if="element.status" class="badge" ng-class="{\'badge-info\': !element.status, \'badge-danger\': (element.status === \'notfound\'), \'badge-warning\': (element.status === \'missplaced\'), \'badge-success\': (element.status === \'placed\')}">{{element.status}}</span>
+            {{element.name}}
+        </a>
+    </div>
+</div>
