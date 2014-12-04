@@ -3,15 +3,14 @@
 
     <span>Sort by: </span>
     <div class="btn-group">
-        <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'type\')" ng-class="{\'active\': sorting === \'type\'}"><span class="fa fa-send-o" > Element type</span></button>
-        <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'AI\')"  ng-class="{\'active\': sorting === \'AI\'}"><span class="fa fa-cubes"> Inventory type</span></button>
+        <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'type\')" ng-class="{\'active\': sorting === \'type\'}"><span class="fa fa-send-o"> Element type</span></button>
         <button class="btn btn-default btn-sm navbar-btn" ng-click="sort(\'status\')" ng-class="{\'active\': sorting === \'status\'}"><span class="fa fa-list"> Inventory state</span></button>
     </div>
 
     <div class="list-group">
         <a href="{{URLconfig.element}}/{{element.id}}" ng-repeat="element in elements | orderBy:sorting:true" class="list-group-item">
-        <span ng-if="element.status" class="badge" ng-class="{\'badge-info\': !element.status, \'badge-danger\': (element.status === \'notfound\'), \'badge-warning\': (element.status === \'missplaced\'), \'badge-success\': (element.status === \'placed\')}">{{element.status}}</span>
-            {{element.name}}
+        <span ng-if="element.status" class="badge" ng-class="{\'badge-info\': !element.status, \'badge-danger\': (element.status === \'notfound\'), \'badge-warning\': (element.status === \'misplaced\'), \'badge-success\': (element.status === \'placed\')}">{{element.status}}</span>
+            {{element.element_name}}
         </a>
     </div>
 </div>
