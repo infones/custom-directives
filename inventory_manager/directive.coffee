@@ -9,7 +9,7 @@ registerDirective 'inventoryManager',
     controller: ($scope, $rootScope, $http, $q) ->
         urlBase = 'https://edocu.service.dev.edocu.local'
 
-        setInventories = (inventories) ->
+        setInventories = (inventories) =>
             $scope.inventories = inventories
             @selectInventory inventories[0].hash if inventories.length is 1
             return

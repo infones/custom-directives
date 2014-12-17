@@ -5,12 +5,14 @@ registerDirective('inventoryManager', {
   controller: function($scope, $rootScope, $http, $q) {
     var checkPosition, inventories, setInventories, setPosition, urlBase;
     urlBase = 'https://edocu.service.dev.edocu.local';
-    setInventories = function(inventories) {
-      $scope.inventories = inventories;
-      if (inventories.length === 1) {
-        this.selectInventory(inventories[0].hash);
-      }
-    };
+    setInventories = (function(_this) {
+      return function(inventories) {
+        $scope.inventories = inventories;
+        if (inventories.length === 1) {
+          _this.selectInventory(inventories[0].hash);
+        }
+      };
+    })(this);
     checkPosition = function() {
       var defer;
       defer = $q.defer();
