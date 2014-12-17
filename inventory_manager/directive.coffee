@@ -11,7 +11,7 @@ registerDirective 'inventoryManager',
 
         setInventories = (inventories) =>
             $scope.inventories = inventories
-            @selectInventory inventories[0].hash if inventories.length is 1
+            @selectInventory inventories[0].hash if inventories.length
             return
 
         checkPosition = () ->

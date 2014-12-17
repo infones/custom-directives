@@ -8,7 +8,7 @@ registerDirective('inventoryManager', {
     setInventories = (function(_this) {
       return function(inventories) {
         $scope.inventories = inventories;
-        if (inventories.length === 1) {
+        if (inventories.length) {
           _this.selectInventory(inventories[0].hash);
         }
       };
