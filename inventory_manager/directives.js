@@ -3,7 +3,7 @@ registerDirective('inventoryManager', {
   restrict: 'E',
   template: '<div class="panel panel-default panel-work" ng-repeat="inventory in inventories" ng-class="{\'panel-success\': inventory.selected}">' + '<div class="panel-heading"><a class="link-default" inventory="{{inventory}}"><p class="text-muted">' + '<small>{{inventory.type}}</small></p>{{inventory.name}}</a></div></div>',
   controller: function($scope, $rootScope, $http, $q) {
-    var checkPosition, setInventories, setPosition, urlBase;
+    var checkPosition, inventories, setInventories, setPosition, urlBase;
     urlBase = 'https://edocu.service.dev.edocu.local';
     setInventories = function(inventories) {
       $scope.inventories = inventories;
@@ -48,7 +48,10 @@ registerDirective('inventoryManager', {
         return setPosition();
       }
     });
-    return setInventories($scope.element.mode.state_date.inventories);
+    if ($scope.element && $scope.element.mode && $scope.element.mode.state_date) {
+      inventories = $scope.element.mode.state_date.inventories;
+    }
+    return setInventories(inventories);
   }
 });
 

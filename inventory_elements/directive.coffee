@@ -29,10 +29,10 @@ registerDirective 'inventoryElements',
         $scope.sorting = 'status'
         $scope.sortingOrder = true
 
-        getElements = (id) ->
+        getElements = (hash) ->
             defer = $q.defer()
 
-            $http.get urlBase + '/service/inventory-process/inventory/' + id + '/elements?element=' + $scope.element.hash
+            $http.get urlBase + '/service/inventory-process/inventory/' + hash + '/elements?element=' + $scope.element.hash
 
             .success (response) ->
                 defer.resolve response
@@ -51,7 +51,7 @@ registerDirective 'inventoryElements',
                 $scope.inventory = inventory
                 return
 
-            getElements inventory.id
+            getElements inventory.hash
             .then (elements) ->
                 setElements(elements)
 

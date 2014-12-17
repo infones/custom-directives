@@ -53,7 +53,9 @@ registerDirective 'inventoryManager',
         checkPosition().then (isPositional) ->
             setPosition() if isPositional
 
-        setInventories $scope.element.mode.state_date.inventories
+        inventories = $scope.element.mode.state_date.inventories if $scope.element and $scope.element.mode and $scope.element.mode.state_date
+
+        setInventories inventories
 
 
 registerDirective 'inventory',

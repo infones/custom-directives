@@ -7,10 +7,10 @@ registerDirective('inventoryElements', {
     urlBase = 'https://edocu.service.dev.edocu.local';
     $scope.sorting = 'status';
     $scope.sortingOrder = true;
-    getElements = function(id) {
+    getElements = function(hash) {
       var defer;
       defer = $q.defer();
-      $http.get(urlBase + '/service/inventory-process/inventory/' + id + '/elements?element=' + $scope.element.hash).success(function(response) {
+      $http.get(urlBase + '/service/inventory-process/inventory/' + hash + '/elements?element=' + $scope.element.hash).success(function(response) {
         return defer.resolve(response);
       }).error(function() {
         return defer.resolve(false);
@@ -24,7 +24,7 @@ registerDirective('inventoryElements', {
       $scope.$apply(function() {
         $scope.inventory = inventory;
       });
-      getElements(inventory.id).then(function(elements) {
+      getElements(inventory.hash).then(function(elements) {
         return setElements(elements);
       });
     });
