@@ -9,32 +9,9 @@ registerDirective 'inventoryManager',
     controller: ($scope, $rootScope, $http, $q) ->
         urlBase = 'https://edocu.service.dev.edocu.local'
 
-        mockInventories = () ->
-            [
-                id: 1
-                name: 'Inventura sedacieho nabytku'
-                type: 'Furniture'
-            ,
-                id: 2
-                name: 'Inventura elektronickych zariadeni'
-                type: 'IT'
-            ]
-
-        getInventories = () ->
-            defer = $q.defer()
-
-            $http.get urlBase + '/service/inventory/getInventories/'
-
-            .success (response) ->
-                defer.resolve response
-            .error ->
-                defer.resolve false
-
-            defer.promise;
-
         setInventories = (inventories) ->
             $scope.inventories = inventories
-            @selectInventory inventories[0].id if inventories.length is 1
+            @selectInventory inventories[0].hash if inventories.length is 1
             return
 
         checkPosition = () ->
@@ -62,10 +39,10 @@ registerDirective 'inventoryManager',
 
             defer.promise;
 
-        @selectInventory = (id) ->
+        @selectInventory = (hash) ->
             $scope.$apply ->
                 _.forEach $scope.inventories, (inventory, key) ->
-                    $scope.inventories[key].selected = if inventory.id is id then true else false
+                    $scope.inventories[key].selected = if inventory.hash is hash then true else false
                     return
                 return
 
@@ -76,7 +53,7 @@ registerDirective 'inventoryManager',
         checkPosition().then (isPositional) ->
             setPosition() if isPositional
 
-        setInventories mockInventories()
+        setInventories $scope.element.mode.state_date.inventories
 
 
 registerDirective 'inventory',

@@ -3,35 +3,12 @@ registerDirective('inventoryManager', {
   restrict: 'E',
   template: '<div class="panel panel-default panel-work" ng-repeat="inventory in inventories" ng-class="{\'panel-success\': inventory.selected}">' + '<div class="panel-heading"><a class="link-default" inventory="{{inventory}}"><p class="text-muted">' + '<small>{{inventory.type}}</small></p>{{inventory.name}}</a></div></div>',
   controller: function($scope, $rootScope, $http, $q) {
-    var checkPosition, getInventories, mockInventories, setInventories, setPosition, urlBase;
+    var checkPosition, setInventories, setPosition, urlBase;
     urlBase = 'https://edocu.service.dev.edocu.local';
-    mockInventories = function() {
-      return [
-        {
-          id: 1,
-          name: 'Inventura sedacieho nabytku',
-          type: 'Furniture'
-        }, {
-          id: 2,
-          name: 'Inventura elektronickych zariadeni',
-          type: 'IT'
-        }
-      ];
-    };
-    getInventories = function() {
-      var defer;
-      defer = $q.defer();
-      $http.get(urlBase + '/service/inventory/getInventories/').success(function(response) {
-        return defer.resolve(response);
-      }).error(function() {
-        return defer.resolve(false);
-      });
-      return defer.promise;
-    };
     setInventories = function(inventories) {
       $scope.inventories = inventories;
       if (inventories.length === 1) {
-        this.selectInventory(inventories[0].id);
+        this.selectInventory(inventories[0].hash);
       }
     };
     checkPosition = function() {
@@ -56,10 +33,10 @@ registerDirective('inventoryManager', {
       });
       return defer.promise;
     };
-    this.selectInventory = function(id) {
+    this.selectInventory = function(hash) {
       return $scope.$apply(function() {
         _.forEach($scope.inventories, function(inventory, key) {
-          $scope.inventories[key].selected = inventory.id === id ? true : false;
+          $scope.inventories[key].selected = inventory.hash === hash ? true : false;
         });
       });
     };
@@ -71,7 +48,7 @@ registerDirective('inventoryManager', {
         return setPosition();
       }
     });
-    return setInventories(mockInventories());
+    return setInventories($scope.element.mode.state_date.inventories);
   }
 });
 
