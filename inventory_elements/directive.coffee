@@ -13,7 +13,7 @@ registerDirective 'inventoryElements',
 
         '<div class="list-group">' +
             '<a href="{{URLconfig.element}}/{{element.hash}}" ng-repeat="element in elements | orderBy:sorting:true" class="list-group-item">' +
-            '<span ng-if="element.status" class="badge" ng-class="{\'badge-info\': !element.status, \'badge-danger\': (element.status === \'notfound\'), \'badge-warning\': (element.status === \'misplaced\'), \'badge-success\': (element.status === \'placed\')}">{{element.status}}</span>' +
+            '<span ng-if="element.status.value" class="badge" ng-class="{\'badge-info\': !element.status.value, \'badge-danger\': (element.status.value === \'notfound\'), \'badge-warning\': (element.status.value === \'misplaced\'), \'badge-success\': (element.status.value === \'placed\')}">{{element.status.value}}</span>' +
                 '{{element.element_name}}' +
             '</a>' +
         '</div>' +
