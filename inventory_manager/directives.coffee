@@ -4,7 +4,7 @@ registerDirective 'inventoryManager',
     restrict: 'E'
     template: '<div class="panel panel-default panel-work" ng-repeat="inventory in inventories" ng-class="{\'panel-success\': inventory.selected}">' +
         '<div class="panel-heading"><a class="link-default" inventory="{{inventory}}"><p class="text-muted">' +
-        '<small>{{inventory.type}}</small></p>{{inventory.name}}</a></div></div>'
+        '<small>{{inventory.inventory_values.join(", ")}}</small></p>{{inventory.element_name}}</a></div></div>'
 
     controller: ($scope, $rootScope, $http, $q) ->
         urlBase = 'https://edocu.service.dev.edocu.local'
@@ -70,7 +70,7 @@ registerDirective 'inventory',
         if not inventory.selected
             element.bind 'click', () ->
 
-                controller.selectInventory inventory.id;
+                controller.selectInventory inventory.hash;
                 controller.emit 'inventory.selected', inventory
 
         @
