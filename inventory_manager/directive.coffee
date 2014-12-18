@@ -39,12 +39,19 @@ registerDirective 'inventoryManager',
 
             defer.promise;
 
-        @selectInventory = (hash) ->
+        @selectInventory = (hash) =>
             $scope.$apply ->
                 _.forEach $scope.inventories, (inventory, key) ->
-                    $scope.inventories[key].selected = if inventory.hash is hash then true else false
+
+                    if inventory.hash is hash
+                        $scope.inventories[key].selected = true
+                        @emit 'inventory.selected', inventory
+                    else
+                        $scope.inventories[key].selected = false
+
                     return
                 return
+
 
 
         @emit = (name, attributes) ->
@@ -55,7 +62,9 @@ registerDirective 'inventoryManager',
 
         inventories = $scope.element.mode.state_date.inventories if $scope.element and $scope.element.mode and $scope.element.mode.state_date
 
-        setInventories inventories
+        setInventories inventories if inventories
+
+        return
 
 
 registerDirective 'inventory',
@@ -71,6 +80,5 @@ registerDirective 'inventory',
             element.bind 'click', () ->
 
                 controller.selectInventory inventory.hash;
-                controller.emit 'inventory.selected', inventory
 
         @

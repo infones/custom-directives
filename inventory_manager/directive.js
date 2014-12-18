@@ -35,13 +35,20 @@ registerDirective('inventoryManager', {
       });
       return defer.promise;
     };
-    this.selectInventory = function(hash) {
-      return $scope.$apply(function() {
-        _.forEach($scope.inventories, function(inventory, key) {
-          $scope.inventories[key].selected = inventory.hash === hash ? true : false;
+    this.selectInventory = (function(_this) {
+      return function(hash) {
+        return $scope.$apply(function() {
+          _.forEach($scope.inventories, function(inventory, key) {
+            if (inventory.hash === hash) {
+              $scope.inventories[key].selected = true;
+              this.emit('inventory.selected', inventory);
+            } else {
+              $scope.inventories[key].selected = true;
+            }
+          });
         });
-      });
-    };
+      };
+    })(this);
     this.emit = function(name, attributes) {
       return $rootScope.$emit(name, attributes);
     };
@@ -53,7 +60,9 @@ registerDirective('inventoryManager', {
     if ($scope.element && $scope.element.mode && $scope.element.mode.state_date) {
       inventories = $scope.element.mode.state_date.inventories;
     }
-    return setInventories(inventories);
+    if (inventories) {
+      setInventories(inventories);
+    }
   }
 });
 
@@ -65,8 +74,7 @@ registerDirective('inventory', {
     inventory = JSON.parse(attributes.inventory);
     if (!inventory.selected) {
       element.bind('click', function() {
-        controller.selectInventory(inventory.hash);
-        return controller.emit('inventory.selected', inventory);
+        return controller.selectInventory(inventory.hash);
       });
     }
     return this;
