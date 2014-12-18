@@ -21,9 +21,7 @@ registerDirective('inventoryElements', {
       $scope.elements = elements;
     };
     $rootScope.$on('inventory.selected', function(event, inventory) {
-      $scope.$apply(function() {
-        $scope.inventory = inventory;
-      });
+      $scope.inventory = inventory;
       getElements(inventory.hash).then(function(elements) {
         return setElements(elements);
       });

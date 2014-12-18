@@ -38,13 +38,11 @@ registerDirective('inventoryManager', {
     this.selectInventory = function(hash) {
       var selectedInventory;
       selectedInventory = {};
-      $scope.$apply(function() {
-        _.forEach($scope.inventories, function(inventory, key) {
-          $scope.inventories[key].selected = inventory.hash === hash ? true : false;
-          if (inventory.hash === hash) {
-            selectedInventory = infentory;
-          }
-        });
+      _.forEach($scope.inventories, function(inventory, key) {
+        $scope.inventories[key].selected = inventory.hash === hash ? true : false;
+        if (inventory.hash === hash) {
+          selectedInventory = infentory;
+        }
       });
       if (selectedInventory) {
         return emit('inventory.selected', selectedInventory);

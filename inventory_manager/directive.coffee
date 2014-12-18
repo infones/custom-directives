@@ -41,11 +41,9 @@ registerDirective 'inventoryManager',
 
         @selectInventory = (hash) ->
             selectedInventory = {}
-            $scope.$apply ->
-                _.forEach $scope.inventories, (inventory, key) ->
-                    $scope.inventories[key].selected = if inventory.hash is hash then true else false
-                    selectedInventory = infentory if inventory.hash is hash
-                    return
+            _.forEach $scope.inventories, (inventory, key) ->
+                $scope.inventories[key].selected = if inventory.hash is hash then true else false
+                selectedInventory = infentory if inventory.hash is hash
                 return
 
             emit 'inventory.selected', selectedInventory if selectedInventory

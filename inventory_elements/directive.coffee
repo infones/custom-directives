@@ -47,9 +47,7 @@ registerDirective 'inventoryElements',
 
         $rootScope.$on 'inventory.selected', (event, inventory) ->
 
-            $scope.$apply ->
-                $scope.inventory = inventory
-                return
+            $scope.inventory = inventory
 
             getElements inventory.hash
             .then (elements) ->
