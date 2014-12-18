@@ -41,7 +41,7 @@ registerDirective('inventoryManager', {
       _.forEach($scope.inventories, function(inventory, key) {
         $scope.inventories[key].selected = inventory.hash === hash ? true : false;
         if (inventory.hash === hash) {
-          selectedInventory = infentory;
+          selectedInventory = inventory;
         }
       });
       if (selectedInventory) {
