@@ -3,7 +3,7 @@ registerDirective('inventoryManager', {
   restrict: 'E',
   template: '<div class="panel panel-default panel-work" ng-repeat="inventory in inventories" ng-class="{\'panel-success\': inventory.selected}">' + '<div class="panel-heading"><a class="link-default" inventory="{{inventory}}"><p class="text-muted">' + '<small>{{inventory.inventory_values.join(", ")}}</small></p>{{inventory.element_name}}</a></div></div>',
   controller: function($scope, $rootScope, $http, $q) {
-    var checkPosition, inventories, setInventories, setPosition, urlBase;
+    var checkPosition, emit, inventories, setInventories, setPosition, urlBase;
     urlBase = 'https://edocu.service.dev.edocu.local';
     setInventories = (function(_this) {
       return function(inventories) {
@@ -35,21 +35,22 @@ registerDirective('inventoryManager', {
       });
       return defer.promise;
     };
-    this.selectInventory = (function(_this) {
-      return function(hash) {
-        return $scope.$apply(function() {
-          _.forEach($scope.inventories, function(inventory, key) {
-            if (inventory.hash === hash) {
-              $scope.inventories[key].selected = true;
-              this.emit('inventory.selected', inventory);
-            } else {
-              $scope.inventories[key].selected = true;
-            }
-          });
+    this.selectInventory = function(hash) {
+      var selectedInventory;
+      selectedInventory = {};
+      $scope.$apply(function() {
+        _.forEach($scope.inventories, function(inventory, key) {
+          $scope.inventories[key].selected = inventory.hash === hash ? true : false;
+          if (inventory.hash === hash) {
+            selectedInventory = infentory;
+          }
         });
-      };
-    })(this);
-    this.emit = function(name, attributes) {
+      });
+      if (selectedInventory) {
+        return emit('inventory.selected', selectedInventory);
+      }
+    };
+    emit = function(name, attributes) {
       return $rootScope.$emit(name, attributes);
     };
     checkPosition().then(function(isPositional) {

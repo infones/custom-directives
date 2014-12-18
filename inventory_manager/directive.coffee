@@ -39,22 +39,20 @@ registerDirective 'inventoryManager',
 
             defer.promise;
 
-        @selectInventory = (hash) =>
+        @selectInventory = (hash) ->
+            selectedInventory = {}
             $scope.$apply ->
                 _.forEach $scope.inventories, (inventory, key) ->
-
-                    if inventory.hash is hash
-                        $scope.inventories[key].selected = true
-                        @emit 'inventory.selected', inventory
-                    else
-                        $scope.inventories[key].selected = false
-
+                    $scope.inventories[key].selected = if inventory.hash is hash then true else false
+                    selectedInventory = infentory if inventory.hash is hash
                     return
                 return
 
+            emit 'inventory.selected', selectedInventory if selectedInventory
 
 
-        @emit = (name, attributes) ->
+
+        emit = (name, attributes) ->
             $rootScope.$emit name, attributes
 
         checkPosition().then (isPositional) ->

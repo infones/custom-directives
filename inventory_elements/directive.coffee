@@ -53,7 +53,7 @@ registerDirective 'inventoryElements',
 
             getElements inventory.hash
             .then (elements) ->
-                setElements(elements)
+                setElements elements
 
             return
 
